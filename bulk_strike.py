@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env
+# removed this shebang line b/c of errors.     /usr/bin/python
 # -*- coding: utf-8 -*-
 
 import argparse
