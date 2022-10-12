@@ -259,20 +259,39 @@ def start_rtr(host: str, file: str, log: bool, queue: bool, cmd_execution:str):
 
     if len(response['errors']) == 0:
         print("RTR session started...")
-        print("type 'bulk <file path>' to execute multiple commands")
 
-        choice = 1
-        if log:
-            timestamp = datetime.now().strftime("%Y-%m-%d@%H%M%S")
-            filename = "rtr_response_" + timestamp + ".tsv"
-            with open(filename, 'w') as outfile:
-                outfile.write("Host ID\tSession ID\tComplete\tOffline Queued\tQuery Duration\tStdout\tStderr\tErrors\n")
+        # JH: Add IF statement to determine if -e cmdline was sent
+        if cmd_execution is not null:       # Send -e string as command to execute on all hosts.
+            print("Executing command: " + cmd_execution + " ..." )
 
-                #JH Removed while loop and sys exit.  This will exit automatically.
-                choice = helpers.execute_command(cmd_execution, outfile)
+            if log:
+                timestamp = datetime.now().strftime("%Y-%m-%d@%H%M%S")
+                filename = "rtr_response_" + timestamp + ".tsv"
+                with open(filename, 'w') as outfile:
+                    outfile.write("Host ID\tSession ID\tComplete\tOffline Queued\tQuery Duration\tStdout\tStderr\tErrors\n")
+                    helpers.execute_command(cmd_execution, outfile)
+            else:
+                helpers.execute_command(cmd_execution, None)
 
-        else:
-                choice = helpers.execute_command(cmd_execution, None)
+            print("Start_rtr sent command: " + cmd_execution + " to all hosts." )
+            #TODO: Add Error handling to see if cmd executed successfully.
+
+        else:       # execute original code for start_rtr which prompts for CMD to execute on all hosts
+            print("type 'bulk <file path>' to execute multiple commands")
+            
+            choice = 1
+            if log:
+                timestamp = datetime.now().strftime("%Y-%m-%d@%H%M%S")
+                filename = "rtr_response_" + timestamp + ".tsv"
+                with open(filename, 'w') as outfile:
+                    outfile.write("Host ID\tSession ID\tComplete\tOffline Queued\tQuery Duration\tStdout\tStderr\tErrors\n")
+                    while choice != 2:
+                        full_cmd = input("(type exit to end) > ")
+                        choice = helpers.execute_command(full_cmd, outfile)
+            else:
+                while choice != 2:
+                    full_cmd = input("(type exit to end) > ")
+                    choice = helpers.execute_command(full_cmd, None)
     else:
         print("RTR session was not started.")
         sys.exit(1)
@@ -281,22 +300,11 @@ def start_rtr(host: str, file: str, log: bool, queue: bool, cmd_execution:str):
                     if len(args.cmd_execution) > 1:
                         full_cmd = cmd_execution
                     else:
-                        full_cmd = input("(type exit to end) > ")'''
+                        full_cmd = input("(type exit to end) > ")
+'''
 
 
-''' This is the original code for this section.
-        if log:
-            timestamp = datetime.now().strftime("%Y-%m-%d@%H%M%S")
-            filename = "rtr_response_" + timestamp + ".tsv"
-            with open(filename, 'w') as outfile:
-                outfile.write("Host ID\tSession ID\tComplete\tOffline Queued\tQuery Duration\tStdout\tStderr\tErrors\n")
-                while choice != 2:
-                    full_cmd = input("(type exit to end) > ")
-                    choice = helpers.execute_command(full_cmd, outfile)
-        else:
-            while choice != 2:
-                full_cmd = input("(type exit to end) > ")
-                choice = helpers.execute_command(full_cmd, None)''' 
+
 
 
 def get_qsessions(to_print: bool) -> list:
