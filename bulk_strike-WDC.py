@@ -268,9 +268,16 @@ def start_rtr(host: str, file: str, log: bool, queue: bool, cmd_execution:str):
             with open(filename, 'w') as outfile:
                 outfile.write("Host ID\tSession ID\tComplete\tOffline Queued\tQuery Duration\tStdout\tStderr\tErrors\n")
                 while choice != 2:
-                    # full_cmd = input("(type exit to end) > ")
-                    full_cmd = cmd_execution
+                    full_cmd = cmd_execution    #added so cmd_execution is used instead of prompt.
+                    # full_cmd = input("(type exit to end) > ")   # comment out to replace
                     choice = helpers.execute_command(full_cmd, outfile)
+
+                    ''' #JH: Adding If statement to detect if rtr_script cmd was included in cmdline
+                    if len(args.cmd_execution) > 1:
+                        full_cmd = cmd_execution
+                    else:
+                        full_cmd = input("(type exit to end) > ")'''
+
         else:
             while choice != 2:
                 # full_cmd = input("(type exit to end) > ")
@@ -367,11 +374,9 @@ def main():
     argument_parser.add_argument('--queue', action='store_true', help="queue commands to offline hosts")
     argument_parser.add_argument('--clean', action='store_true', help="exclude less important details from output")
 
-
-# Add argument to send command directly to batch
+# JH: Add argument to for 'runscript' cmd execution
     argument_parser.add_argument('-e', '--cmd_execution', default=None, help=(
-        'The command to execute on all systems.'))
-
+        'The runscript command to execute on all systems.'))
 
     options = argument_parser.parse_args()
     if options.file is not None:
@@ -391,7 +396,7 @@ def main():
     elif options.action == 'get_logins':
         get_logins(options.host, options.file, options.log, options.clean)
     elif options.action == 'start_rtr':
-        start_rtr(options.host, options.file, options.log, options.queue, options.cmd_execution)
+        start_rtr(options.host, options.file, options.log, options.queue, options.cmd_execution)  # JH: added options.cmd_execution 
     elif options.action in ('list_files', 'list_scripts'):
         list_files(options.action)
     elif options.action in ('get_file', 'get_script'):
