@@ -356,7 +356,7 @@ def main():
         'get_script      -i                         get detailed info of a RTR response file on CrowdStrike Cloud.\n'
         'upload_script   -f and -p [-d]             upload a RTR response file to CrowdStrike Cloud.\n'
         'delete_script   -i                         delete a RTR response file from CrowdStrike Cloud.\n'
-        'start_rtr       -s or -f [--log] [--queue] initialise rtr session on specified hosts.\n'
+        'start_rtr       -s or -f [--log] [--queue] -e  initialise rtr session on specified hosts.\n'
         'get_qsessions   NIL                        get session ids of RTR sessions that had commands queued.\n'
         'get_qsess_data  NIL [--log]                get metadata of RTR sessions that had commands queued.\n'
         'del_qsession    -q                         delete a currently queued RTR session.\n'
