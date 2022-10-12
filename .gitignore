@@ -69,3 +69,4 @@ venv/
 host_ids*.txt
 commands.txt
 testcases.txt
+.DS_Store
