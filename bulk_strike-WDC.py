@@ -260,7 +260,7 @@ def start_rtr(host: str, file: str, log: bool, queue: bool, cmd_execution:str):
     if len(response['errors']) == 0:
         print("RTR session started...")
 
-        # JH: Add IF statement to determine if -e cmdline was sent
+        # JH: Add IF statement to determine if -e cmdline (cmd string to execute on all hosts) was sent
         if cmd_execution is not None:       # Send -e string as command to execute on all hosts.
             print("Executing command: " + cmd_execution + " ..." )
 
@@ -295,17 +295,6 @@ def start_rtr(host: str, file: str, log: bool, queue: bool, cmd_execution:str):
     else:
         print("RTR session was not started.")
         sys.exit(1)
-
-''' #JH: Adding If statement to detect if rtr_script cmd was included in cmdline
-                    if len(args.cmd_execution) > 1:
-                        full_cmd = cmd_execution
-                    else:
-                        full_cmd = input("(type exit to end) > ")
-'''
-
-
-
-
 
 def get_qsessions(to_print: bool) -> list:
     response = cs_methods.get_qsessions()
