@@ -70,3 +70,7 @@ host_ids*.txt
 commands.txt
 testcases.txt
 .DS_Store
+rtr_hosts_*tsv
+rtr_response_*.tsv
+.gitignore
+.gitignore
