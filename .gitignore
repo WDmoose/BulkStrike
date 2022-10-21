@@ -73,4 +73,6 @@ testcases.txt
 rtr_hosts_*tsv
 rtr_response_*.tsv
 .gitignore
-.gitignore
+
+# venv files
+*.env/
