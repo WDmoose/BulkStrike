@@ -260,7 +260,7 @@ def start_rtr(host: str, file: str, log: bool, queue: bool, cmd_execution:str):
     if len(response['errors']) == 0:
         print("RTR session started...")
 
-        # JH: Add IF statement to determine if -e cmdline (cmd string to execute on all hosts) was sent
+        # Check if -e cmd was included in cmdline args, if yes send cmd to all hosts.
         if cmd_execution is not None:       # Send -e string as command to execute on all hosts.
             print("Executing command: " + cmd_execution + " ..." )
 
